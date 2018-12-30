@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Probabilistic Machine Learning</title>
+    <description>Short tutorials and proofs in machine learning.
+</description>
+    <link>https://markovblanket.github.io/</link>
+    <atom:link href="https://markovblanket.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 30 Dec 2018 01:34:40 -0500</pubDate>
+    <lastBuildDate>Sun, 30 Dec 2018 01:34:40 -0500</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Rejection Sampling</title>
+        <description>&lt;p&gt;Rejection sampling is a simple algorithm to sample from an arbitrary distribution that is hard to sample from directly. The idea is to accept and reject the samples from another distribution which is easy to sample from. Suppose that:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1&lt;/strong&gt;- &lt;script type=&quot;math/tex&quot;&gt;f(x)&lt;/script&gt; is the target distribution that can be any arbitrary function of &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;, such that:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\forall x:\, f(x)\geq 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\int_{x}{f(x)\, \mathrm{d}x =1}&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;2&lt;/strong&gt;- &lt;script type=&quot;math/tex&quot;&gt;g(x)&lt;/script&gt; is another distribution which is easy to sample from and also 
+for all values of  &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;, there exists a constant  &lt;script type=&quot;math/tex&quot;&gt;M&lt;/script&gt; satisfying    &lt;script type=&quot;math/tex&quot;&gt;f(x)\leq M g(x)&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3&lt;/strong&gt;- &lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt; is the uniform distribution such that:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{equation}
+    p(U=u)= 
+\begin{cases}
+	1    ,&amp; \text{if } 0\leq u\leq 1\\
+    0,              &amp; \text{otherwise}
+\end{cases}
+\end{equation} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Now suppose that we have one sample generator for distribution &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt;  (which was easy to do the sampling &lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;)
+and one for the uniform distribution &lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;In each step, first we generate a sample from the &lt;script type=&quot;math/tex&quot;&gt;g&lt;/script&gt; distribution and we call it &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt;, also we get another sample from the uniform distribution and we call it &lt;script type=&quot;math/tex&quot;&gt;u&lt;/script&gt;. Now if  &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+u &lt; \dfrac{f(y)}{Mg(y)} %]]&gt;&lt;/script&gt; we accept this sample and otherwise it should be rejected.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/assets/sample_rejected.png&quot; alt=&quot;image&quot; /&gt;
+&lt;!-- 	&lt;figcaption&gt;
+		There is nothing on this earth more to be prized than true friendship.
+	&lt;/figcaption&gt;
+ --&gt;&lt;/p&gt;
+
+&lt;p&gt;We want to show that by continuing this algorithm the emprical distribution for the accepted samples is equal to the desired &lt;script type=&quot;math/tex&quot;&gt;f(x)&lt;/script&gt; distribution.&lt;/p&gt;
+
+&lt;p&gt;First it’s obvious that we are looking for &lt;script type=&quot;math/tex&quot;&gt;p_{\mathrm{emprical}}{(y)}&lt;/script&gt; which is equal to  &lt;script type=&quot;math/tex&quot;&gt;p(y|\mathrm{accept})&lt;/script&gt;. By using Bayes rule we have:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}
+p(y|\mathrm{accept})
+=
+\dfrac{
+p(\mathrm{accept}|y)
+p(y)
+}{
+p(\mathrm{accept})
+}
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;Now we can evaluate each term separately.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1&lt;/strong&gt;-
+&lt;script type=&quot;math/tex&quot;&gt;p(\mathrm{accept}|y)&lt;/script&gt;
+is the probability that the sample is accepted which is equal to &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+p\big(u &lt; \dfrac{f(y)}{Mg(y)}\big)
+=
+\dfrac{f(y)}{Mg(y)} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2&lt;/strong&gt;-
+&lt;script type=&quot;math/tex&quot;&gt;p(y)&lt;/script&gt; is the distribution used for generating &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt;, so we have &lt;script type=&quot;math/tex&quot;&gt;p(y)= g(y)&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3&lt;/strong&gt;-
+&lt;script type=&quot;math/tex&quot;&gt;p(\mathrm{accept})=\int p(\mathrm{accept}|y)p(y) \mathrm{d}y=\int \dfrac{f(y)}{M} \,\mathrm{d}y= \dfrac{1}{M}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;And the proof is complete:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(y|\mathrm{accept})=\dfrac{
+	\dfrac{f(y)}{Mg(y)}
+	g(y)
+}{\dfrac{1}{M}}= f(y)&lt;/script&gt;
+</description>
+        <pubDate>Fri, 28 Dec 2018 05:11:11 -0500</pubDate>
+        <link>https://markovblanket.github.io/2018/12/28/sample-rejection.html</link>
+        <guid isPermaLink="true">https://markovblanket.github.io/2018/12/28/sample-rejection.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>EM Algorithm and Maximum Likelihood</title>
+        <description>&lt;p&gt;In this post first we talk about the importance of maximum likelihood and then we evaluate 
+the Expectation Maximization (EM&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;) algorithm.&lt;/p&gt;
+
+&lt;h2 id=&quot;maximum-likelihood-interpretation&quot;&gt;Maximum Likelihood Interpretation:&lt;/h2&gt;
+&lt;p&gt;Suppose that we have a dataset of i.i.d samples &lt;script type=&quot;math/tex&quot;&gt;\{x_i\}_{i=1}^{N_D}&lt;/script&gt; 
+in which &lt;script type=&quot;math/tex&quot;&gt;N_D&lt;/script&gt; is the number of datapoints. We are assuming each datapoint was independently sampled from &lt;script type=&quot;math/tex&quot;&gt;p(x;\boldsymbol\theta)&lt;/script&gt; and we want to estimate &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol\theta&lt;/script&gt;. Since these samples are i.i.d we can factorize their joint probability:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(x_1,x_2,\ldots,x_{N_D};\boldsymbol\theta)
+=
+\prod_{i=1}^{N_D}
+{p(x_i;\boldsymbol{\theta})}&lt;/script&gt;
+
+&lt;p&gt;Maximum likelihood method looks for the parameter that maximizes this joint probability (or the log of joint probability&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\boldsymbol\theta}=\arg\max_{\boldsymbol\theta}
+\sum_{i=1}^{N_D}{\log p(x_i;\boldsymbol\theta)}&lt;/script&gt;
+
+&lt;p&gt;Now suppose that &lt;script type=&quot;math/tex&quot;&gt;y=\{y_k\}_{k=1}^{K}&lt;/script&gt; is the set of unique datapoints and &lt;script type=&quot;math/tex&quot;&gt;N_{D}=\sum_{k=1}^{K}{N_k}&lt;/script&gt;, so we can rewrite the equation for &lt;script type=&quot;math/tex&quot;&gt;\hat{\boldsymbol\theta}&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\hat{\boldsymbol\theta}&amp;=
+\arg\max_{\boldsymbol\theta}
+\sum_{k=1}^{K}{N_k\log p(y_k;\boldsymbol\theta)}\\
+
+&amp;=\arg\max_{\boldsymbol\theta}
+\sum_{k=1}^{K}{\dfrac{N_k}{N_D}\log p(y_k;\boldsymbol\theta)}\\
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;In this equation &lt;script type=&quot;math/tex&quot;&gt;\dfrac{N_k}{N_D}&lt;/script&gt; is the frequency of each datapoint which shows the emprical distribution of unique datapoints, so by defining &lt;script type=&quot;math/tex&quot;&gt;q(y_k)&lt;/script&gt; as our emprical distribution:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\hat{\boldsymbol\theta}
+&amp;=\arg\max_{\boldsymbol\theta}
+\sum_{k=1}^{K}{q(y_k)\log p(y_k;\boldsymbol\theta)}\\
+
+&amp;=\arg\max_{\boldsymbol\theta}
+\sum_{k=1}^{K}{q(y_k)\log 
+\dfrac{p(y_k;\boldsymbol\theta)}{q(y_k)}}\\
+
+&amp;=\arg\max_{\boldsymbol\theta}
+D_{\mathrm{KL}}\big(q(y)\|p(y;\theta)\big)
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;The last equation shows that by using maximum likelihood we are minimizing the KL-divergence between emprical distribution (&lt;script type=&quot;math/tex&quot;&gt;q(y)&lt;/script&gt;) and the predefined model (&lt;script type=&quot;math/tex&quot;&gt;p(y;\theta)&lt;/script&gt;).&lt;/p&gt;
+
+&lt;h2 id=&quot;expectation-maximization&quot;&gt;Expectation Maximization:&lt;/h2&gt;
+&lt;p&gt;Sometimes it’s not easy to find &lt;script type=&quot;math/tex&quot;&gt;\hat{\boldsymbol{\theta}}&lt;/script&gt; directly, but adding a latent variable to the model 
+makes the joint probability of &lt;script type=&quot;math/tex&quot;&gt;p(\boldsymbol{X},\mathbf{z};\boldsymbol{\theta})&lt;/script&gt; easier to deal with. In this part we see how we can find an iterative algorithm to improve approximated parameters in each step. We know that for a concave function if &lt;script type=&quot;math/tex&quot;&gt;\lambda_1\geq 0,\ldots,\lambda_n\geq 0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\sum_{i} \lambda_i =1&lt;/script&gt; we have Jensen’s inequality. 
+&lt;script type=&quot;math/tex&quot;&gt;f\big(\sum_i \lambda_i x_i\big) \geq
+\sum_i \lambda_i f(x_i)&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;Image below depicts this inequality for a simple case that we have just two points (&lt;script type=&quot;math/tex&quot;&gt;n=2&lt;/script&gt;):&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+	&lt;img width=&quot;100%&quot; height=&quot;100%&quot; src=&quot;/assets/concave3.png&quot; alt=&quot;image&quot; /&gt;
+&lt;!-- 	&lt;figcaption&gt;
+		There is nothing on this earth more to be prized than true friendship.
+	&lt;/figcaption&gt;
+ --&gt;&lt;/p&gt;
+
+&lt;p&gt;In statistics a special case of Jensen’s inequality holds for the expected value of a concave function.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\mathbb{E}[f(x)]&amp;=\sum p(x)f(x)\\
+&amp;\leq
+f\big(\sum xp(x)\big)\\
+&amp;=f\big(\mathbb{E}[x]\big)
+ \end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Now suppose that &lt;script type=&quot;math/tex&quot;&gt;\mathbf{X}&lt;/script&gt; is the set of all datapoints and in &lt;script type=&quot;math/tex&quot;&gt;n^{\mathrm{th}}&lt;/script&gt; iteration the estimate for &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; is &lt;script type=&quot;math/tex&quot;&gt;\theta_n&lt;/script&gt;. 
+We want to maximize &lt;script type=&quot;math/tex&quot;&gt;L(\boldsymbol\theta)&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;L(\boldsymbol\theta)=\log p(\mathbf{X};\boldsymbol\theta)&lt;/script&gt;
+
+&lt;p&gt;Since we want to make sure that in each iteration our likelihood is getting better (&lt;script type=&quot;math/tex&quot;&gt;L(\boldsymbol\theta_{n+1})\geq L(\boldsymbol\theta_{n}))&lt;/script&gt;, 
+our best action would be finding the parameter &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\hat{\theta}}&lt;/script&gt; that maximizes the distance between 
+&lt;script type=&quot;math/tex&quot;&gt;L(\boldsymbol\theta)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;L(\boldsymbol\theta_n)&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Delta(\boldsymbol\theta|\boldsymbol\theta_n)=
+L(\boldsymbol\theta)-
+L(\boldsymbol\theta_n)= 
+\log \bigg(\dfrac{p(\mathbf{X};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)
+}
+\bigg)&lt;/script&gt;
+
+&lt;p&gt;We know that &lt;script type=&quot;math/tex&quot;&gt;\log&lt;/script&gt; function is concave and adding a sum inside the &lt;script type=&quot;math/tex&quot;&gt;\log&lt;/script&gt; would provide this opportunity to use Jensen’s inequality. The numerator of the fraction inside log is a marginal probability that can be written as summation of joint probability:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\mathbf{X};\boldsymbol\theta)=
+	\sum_\mathbf{z}{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}&lt;/script&gt;
+
+&lt;p&gt;And we have:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Delta(\boldsymbol\theta|\boldsymbol\theta_n)=
+\log \bigg(\sum_{\mathbf{z}}\dfrac{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)
+}
+\bigg)&lt;/script&gt;
+
+&lt;p&gt;Now we see that &lt;script type=&quot;math/tex&quot;&gt;\dfrac{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)
+}&lt;/script&gt;
+is playing the role of &lt;script type=&quot;math/tex&quot;&gt;f(\mathbf{z})&lt;/script&gt; and since the summation is over &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt;, we should add a probability distribution of &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; (something like &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z})&lt;/script&gt;) to be able to use Jensen’s inequality. Our different options are:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1-&lt;/strong&gt; Our first option is &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z};\boldsymbol\theta_n)&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\Delta(\boldsymbol\theta|\boldsymbol\theta_n)
+&amp;=\log \bigg(\sum_{\mathbf{z}}p(\mathbf{z};\boldsymbol\theta_n)
+\dfrac{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)p(\mathbf{z};\boldsymbol\theta_n)
+}
+\bigg)\\
+&amp;\geq 
+\sum_{\mathbf{z}}p(\mathbf{z};\boldsymbol\theta_n)
+\log
+\bigg(
+\dfrac{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)p(\mathbf{z};\boldsymbol\theta_n)
+}
+\bigg)
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;So we have found a lower bound for &lt;script type=&quot;math/tex&quot;&gt;\Delta(\boldsymbol\theta|\boldsymbol\theta_n)&lt;/script&gt; 
+and by maximizing this lower bound in each iteration we want to make sure that liklihood is getting better and better:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\boldsymbol{\theta}_{n+1}&amp;=
+\arg\max_{\theta}
+\sum_{\mathbf{z}}p(\mathbf{z};\boldsymbol\theta_n)
+\log
+\bigg(
+\dfrac{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)p(\mathbf{z};\boldsymbol\theta_n)
+}
+\bigg)
+\\
+&amp;=
+\arg\max_{\theta}
+\sum_{\mathbf{z}}p(\mathbf{z};\boldsymbol\theta_n)
+\log
+{
+	p(\mathbf{X},\mathbf{z};\boldsymbol\theta)
+}
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;But &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol\theta_n&lt;/script&gt; 
+is supposed to include all the parameters needed for the joint probability of &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{X}&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt;
+which is 
+&lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{X},\mathbf{z};\boldsymbol{\theta_n})&lt;/script&gt;
+and in general case &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z};\boldsymbol\theta_n)&lt;/script&gt; is just using a subset of parameters defined in &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta_n}&lt;/script&gt; and some other parameters such as parameters needed for &lt;script type=&quot;math/tex&quot;&gt;p(\boldsymbol{X}|\mathbf{z})&lt;/script&gt; may not be updated. So we can evaluate another option.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2-&lt;/strong&gt; The second option is 
+&lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})&lt;/script&gt; that uses all the parameters defined in &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta_n}&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\boldsymbol{\theta}_{n+1}&amp;=
+\arg\max_{\theta}
+\sum_{\mathbf{z}}p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})
+\log
+\bigg(
+\dfrac{p(\mathbf{X},\mathbf{z};\boldsymbol\theta)}
+{
+	p(\mathbf{X};\boldsymbol\theta_n)
+	p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})
+}
+\bigg)
+\\
+&amp;=
+\arg\max_{\theta}
+\sum_{\mathbf{z}}
+p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})
+\log
+{
+	p(\mathbf{X},\mathbf{z};\boldsymbol\theta)
+}
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;And this last equation is the general form of EM algorithm:&lt;/p&gt;
+&lt;h1 id=&quot;e-step&quot;&gt;E-step:&lt;/h1&gt;
+&lt;p&gt;Compute the expected value of joint probability:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;f(\boldsymbol\theta)=
+\mathbb{E}_{p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})}
+\bigg[
+\log
+{
+	p(\mathbf{X},\mathbf{z};\boldsymbol\theta)
+}
+\bigg]&lt;/script&gt;
+
+&lt;h1 id=&quot;m-step&quot;&gt;M-step:&lt;/h1&gt;
+&lt;p&gt;Maximize &lt;script type=&quot;math/tex&quot;&gt;f(\boldsymbol\theta)&lt;/script&gt; with respect to &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol\theta&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\boldsymbol{\theta}_{n+1}=
+\arg\max_{\boldsymbol\theta} 
+f(\boldsymbol\theta)&lt;/script&gt;
+
+&lt;!-- it makes sence to 
+Maximizing $$ L(\boldsymbol\theta) $$ in $${(n+1)}^{\mathrm{th}}$$ step is equivalent to maximizing $$L(\boldsymbol\theta)$$
+ --&gt;
+</description>
+        <pubDate>Fri, 28 Dec 2018 05:11:11 -0500</pubDate>
+        <link>https://markovblanket.github.io/2018/12/28/EMalgorithm.html</link>
+        <guid isPermaLink="true">https://markovblanket.github.io/2018/12/28/EMalgorithm.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Variational Inference</title>
+        <description>&lt;p&gt;In probabilistic machine learning we are always assuming that our observations &lt;script type=&quot;math/tex&quot;&gt;\{x_1,x_2,\ldots,x_N\}&lt;/script&gt; are samples generated from probability distributions and we are dealing with their joint probability:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}
+p(x[0],x[1],\ldots,x[N-1];\theta)
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;For each particular problem 
+(or dataset&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;)
+ we can define our model for this joint probability. 
+For example when the probability distribution has semicolon (like &lt;script type=&quot;math/tex&quot;&gt;p(x;\theta)&lt;/script&gt;), it means that in our predefined model we have a deterministic but unknwon parameter &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; 
+&lt;!-- that by using an approach such as maximum likelihood this parameter (or a set of parameters$$$$) can be found. --&gt;
+and we are looking for an estimator (a function of samples&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;)
+to
+ approximate this parameter
+:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\theta}=g(x[0],x[1],\ldots,x[N-1])&lt;/script&gt;
+
+&lt;p&gt;For example in 
+language modeling we can assume words in a sentence are i.i.d data samples  (the sentence is an array of these words &lt;script type=&quot;math/tex&quot;&gt;s=\{w[0],w[1],\ldots,w[N-1] \}&lt;/script&gt;) and our aim is to find the parameters of their distribution:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;w[i]\sim p(w;\theta)&lt;/script&gt;
+
+&lt;p&gt;We can improve this model by adding latent variables.  In language modeling we know that sentences are generated by grammar rules, so this prior information can help us to make more accurate models. In other words, in this new model first there are samples generated from hidden variables (&lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt;) and then our observations (&lt;script type=&quot;math/tex&quot;&gt;\mathbf{x}&lt;/script&gt;) are generated by them.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img width=&quot;8%&quot; height=&quot;8%&quot; src=&quot;/assets/xz.png&quot; /&gt;
+&lt;/p&gt;
+&lt;p&gt;After introducing the latent variables to our model instead of the joint probability of datasamples we should define the joint probability of data and the hidden variables in &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol{\theta}}(\mathbf{x},\mathbf{z})&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p&gt;A good example for adding latent variables is clustering. Suppose that first we just see the raw datapoints:&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img width=&quot;60%&quot; height=&quot;60%&quot; src=&quot;/assets/2_clusters_data.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;After observing the data I can decide to have two clusters in my model and simply define
+ &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol{\theta}}(\mathbf{x}|z=0)
+ 	=
+ 	\mathcal{N}(\mu_0,\sigma_0)&lt;/script&gt;
+and 
+similarly
+ &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol{\theta}}(\mathbf{x}|z=1)
+ 	=
+ 	\mathcal{N}(\mu_1,\sigma_1)&lt;/script&gt;
+.
+ Also I should define the prior information for &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol\theta}(\mathbf{z})&lt;/script&gt;. (We sometimes assume that the prior for &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; lacks any parameter such as &lt;script type=&quot;math/tex&quot;&gt;\mathcal{N}(0,1)&lt;/script&gt;). So in this clustering example our model for the conditional probability is Gaussian and the parameters for them are &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}=\{\mu_0,\sigma_0,\mu_1,\sigma_1\}&lt;/script&gt;.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+  &lt;img width=&quot;60%&quot; height=&quot;60%&quot; src=&quot;/assets/2_clusters_z_2.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Now since &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; is not deterministic and it was defined to be a random variable, after observing the data we want to infer &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{x})&lt;/script&gt; 
+ and we call it the &lt;em&gt;posterior&lt;/em&gt;.
+By using Bayes rule we can define this distribution 
+based on the model we defined:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\mathbf{z}|\mathbf{x})=\dfrac{p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})}{p_{\boldsymbol\theta}(\mathbf{x})}&lt;/script&gt;
+
+&lt;p&gt;Also we know that in continuous case:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation}
+p_{\boldsymbol\theta}(\mathbf{x})=\int 
+p_{\boldsymbol\theta}(\mathbf{x}|\mathbf{z})
+p_{\boldsymbol\theta}(\mathbf{z})
+ \, \mathrm{d}\mathbf{z}
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;Since this integral is over all possible values for &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; if the dimension of &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; is high or the number of different possible values it can take is infinite then 
+&lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{x})&lt;/script&gt; 
+is intractable. Now one of the solutions would be estimating 
+&lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{x})&lt;/script&gt; by defining a tractable distribution 
+(
+a simple distribution that we define ourselves&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;)
+such as &lt;script type=&quot;math/tex&quot;&gt;q_{\mathbf{\phi}}(\mathbf{z})&lt;/script&gt; and minimizing the divergence between &lt;script type=&quot;math/tex&quot;&gt;q_{\boldsymbol{\phi}}(\mathbf{z})&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{x})&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+
+D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)&amp;=
+\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}\bigg [ \log\frac{
+	q_\boldsymbol{\phi}({\mathbf{z}})
+}{
+	p(\mathbf{z}|\mathbf{x})
+}\bigg ] \\
+&amp;=\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}\bigg [ \log\frac{
+	q_\boldsymbol{\phi}({\mathbf{z}})p_{\boldsymbol\theta}(\mathbf{x})
+}{
+	p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})
+}\bigg] \\
+
+&amp;=\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}\bigg [ \log\frac{
+	q_\boldsymbol{\phi}({\mathbf{z}})
+}{
+	p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})
+}\bigg]
++
+\mathbb{E}_{q_\boldsymbol{\phi}(\mathbf{z})}
+\log p_{\boldsymbol\theta}{(\mathbf{x})}
+
+ \\
+
+&amp;=\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}\bigg[ \log\frac{
+	q_\boldsymbol{\phi}({\mathbf{z}})
+}{
+	p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})
+}\bigg]+\log p_{\boldsymbol\theta}(\mathbf{x}) \\
+
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;We have used the equation:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+	\mathbb{E}_{q_{\boldsymbol{\phi}}{(\mathbf{z})}}\big [\log p_{\boldsymbol\theta}(\mathbf{x}) \big]&amp;=\int q_{\boldsymbol{\phi}}(\mathbf{z})
+	\log p_{\boldsymbol\theta}(\mathbf{x})\,\mathrm{d}\mathbf{z} \\
+	&amp;=\log p_{\boldsymbol\theta}(\mathbf{x})
+	\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Finally we can write:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\underbrace{
+\log p_{\boldsymbol\theta}(\mathbf{x})
+}_{\text{evidence}}
+=
+D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)
++
+\underbrace{
+\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}\bigg[ \log\frac{
+	p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})
+}{
+	q_\boldsymbol{\phi}({\mathbf{z}})
+}\bigg]
+}_{\text{ELBO}}&lt;/script&gt;
+
+&lt;p&gt;We should note than the set of &lt;script type=&quot;math/tex&quot;&gt;\{
+\boldsymbol\theta,\boldsymbol\phi
+\}&lt;/script&gt; are the parameters we want to estimate
+. As we see the evidence is just a function of &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol\theta&lt;/script&gt; so minimizing &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)&lt;/script&gt; with respect to &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol\phi&lt;/script&gt; is equal to maximizing the ELBO with respect to this parameter. Also maximizing the ELBO with respect to &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol\theta&lt;/script&gt; is equal to maximizing the likelihood. So instead of dealing with 
+&lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)&lt;/script&gt; which is intractable, we  use the ELBO as our objective function.&lt;/p&gt;
+
+&lt;h1 id=&quot;why-did-we-start-with-d_mathrmklbigq_boldsymbolphimathbfzpmathbfzmathbfxbig&quot;&gt;Why did we start with &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)&lt;/script&gt;?&lt;/h1&gt;
+
+&lt;p&gt;In variational inference we are approximating an intractable distribution with a tractable one and we want to minimize their divergence (which is different from distance&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;). KL divergence has some important properties:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1-&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}(P\|Q)\geq 0
+\quad \forall P,Q&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2-&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}(P\|Q)=0
+\quad&lt;/script&gt; if and only if &lt;script type=&quot;math/tex&quot;&gt;P=Q&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;So based on these two conditions we see that both &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)&lt;/script&gt; and 
+&lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(p(\mathbf{z}|\mathbf{x})\|
+q_{\boldsymbol\phi}(\mathbf{z})
+\big)&lt;/script&gt;
+ could be our objective functions to make &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{x})&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;q_{\boldsymbol\phi}(\mathbf{z})&lt;/script&gt; as similar as possible but the problem with &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(p(\mathbf{z}|\mathbf{x})\|
+q_{\boldsymbol\phi}(\mathbf{z})
+\big)&lt;/script&gt; is the intractable part:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;D_{\mathrm{KL}}\big(p(\mathbf{z}|\mathbf{x})\|
+q_{\boldsymbol\phi}(\mathbf{z})
+\big)=
+\int_{\mathbf{z}}{
+\underbrace{
+\dfrac{p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})}{p_{\boldsymbol\theta}(\mathbf{x})}
+}
+_{f(p)}
+}
+\log{
+\big(
+\underbrace{
+\dfrac{
+	p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})
+}{q_{\boldsymbol\phi}(\mathbf{z})p_{\boldsymbol\theta}(\mathbf{x})}}
+_{g(p,q)}
+\big)
+}
+\, \mathrm{d}{\mathbf{z}}&lt;/script&gt;
+
+&lt;p&gt;We should look for a way to separate tractable and intractable parts from &lt;script type=&quot;math/tex&quot;&gt;p(\mathbf{z}|\mathbf{x};\boldsymbol{\theta})&lt;/script&gt; and since both &lt;script type=&quot;math/tex&quot;&gt;f(p)&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;g(p,q)&lt;/script&gt; include &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol\theta}(\mathbf{x})&lt;/script&gt;, it’s not possible to derive tractable parts from the integral but as we showed in &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p(\mathbf{z}|\mathbf{x})\big)&lt;/script&gt; the intractable part (&lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol\theta}(x)&lt;/script&gt;) is just inside the &lt;script type=&quot;math/tex&quot;&gt;\log&lt;/script&gt; function which leads to ELBO.&lt;/p&gt;
+&lt;h1 id=&quot;what-does-elbo-mean&quot;&gt;What does ELBO mean?&lt;/h1&gt;
+
+&lt;p&gt;By looking at the formula derived for the ELBO, we see:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{align}
+\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}\bigg[ \log\frac{
+	p_{\boldsymbol{\theta}}(\mathbf{x}|\mathbf{z})p_{\boldsymbol\theta}(\mathbf{z})
+}{
+	q_\boldsymbol{\phi}({\mathbf{z}})
+}\bigg]=
+\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}
+{\log p_{\boldsymbol\theta}(\mathbf{x}|\mathbf{z})}
+-
+D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p_{\boldsymbol\theta}(\mathbf{z})\big)
+\end{align}&lt;/script&gt;
+
+&lt;p&gt;The ELBO shows that when we are approximating 
+ the posterior with &lt;script type=&quot;math/tex&quot;&gt;q_{\boldsymbol\phi}(\mathbf{z})&lt;/script&gt;, first we have some prior information about &lt;script type=&quot;math/tex&quot;&gt;p_{\theta}(\mathbf{z})&lt;/script&gt; and it makes sense to minimize 
+ &lt;script type=&quot;math/tex&quot;&gt;D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p_{\boldsymbol\theta}(\mathbf{z})\big)&lt;/script&gt;.
+ Also we have observed the data samples which we want to reconstruct and 
+make them as probable as possible. So we should maximize 
+&lt;script type=&quot;math/tex&quot;&gt;\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}
+{\log p_{\boldsymbol\theta}(\mathbf{x}|\mathbf{z})}&lt;/script&gt;. In other words, before observing the data we had some information and now after observing them we have further information about the model and our approximation for the posterior should make a balance between them.&lt;/p&gt;
+
+&lt;!-- &lt;figure&gt;      
+	&lt;img src=&quot;/assets/latent_variable.png&quot; alt=&quot;image&quot;
+	&gt;
+	&lt;figcaption&gt;
+		latent variable
+	&lt;/figcaption&gt;
+&lt;/figure&gt; --&gt;
+</description>
+        <pubDate>Fri, 28 Dec 2018 05:11:11 -0500</pubDate>
+        <link>https://markovblanket.github.io/2018/12/28/variational-inference.html</link>
+        <guid isPermaLink="true">https://markovblanket.github.io/2018/12/28/variational-inference.html</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
