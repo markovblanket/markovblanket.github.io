@@ -151,6 +151,38 @@ p\big(u < \dfrac{f(y)}{Mg(y)}\big)
 	g(y)
 }{\dfrac{1}{M}}= f(y)</script>
 
+<p><!--First way--></p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_config = function () {
+    // Here is an example,
+    // this.page.url = "https://poanchen.github.io/2018/12/28/sample-rejection.html";
+    this.page.url = "https://markovblanket.github.io/2018/12/28/sample-rejection.html";
+    this.page.identifier = "/2018/12/28/sample-rejection.html";
+  };
+  // You should be able to get the following lines of code from your Disqus admin.
+  // https://disqus.com/admin/universalcode
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//markovblanket.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+<noscript>
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+<!--Second way-->
+<div id="disqus_thread"></div>
+<script src="/path/to/your/disqus.js"></script>
+
+<noscript>
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+
 				</div>
 			</article>
 		</li>
@@ -377,6 +409,37 @@ p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})
 \arg\max_{\boldsymbol\theta} 
 f(\boldsymbol\theta)</script>
 
+<p><!--First way--></p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_config = function () {
+    // Here is an example,
+    // this.page.url = "https://poanchen.github.io/2018/12/28/EMalgorithm.html";
+    this.page.url = "https://markovblanket.github.io/2018/12/28/EMalgorithm.html";
+    this.page.identifier = "/2018/12/28/EMalgorithm.html";
+  };
+  // You should be able to get the following lines of code from your Disqus admin.
+  // https://disqus.com/admin/universalcode
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//markovblanket.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+<noscript>
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+<!--Second way-->
+<div id="disqus_thread"></div>
+<script src="/path/to/your/disqus.js"></script>
+
+<noscript>
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
 <!-- it makes sence to 
 Maximizing $$ L(\boldsymbol\theta) $$ in $${(n+1)}^{\mathrm{th}}$$ step is equivalent to maximizing $$L(\boldsymbol\theta)$$
  -->
@@ -407,7 +470,7 @@ p(x[0],x[1],\ldots,x[N-1];\theta)
 <p>For each particular problem 
 (or dataset<script type="math/tex"></script>)
  we can define our model for this joint probability. 
-For example when the probability distribution has semicolon (like <script type="math/tex">p(x;\theta)</script>), it means that in our predefined model we have a deterministic but unknwon parameter <script type="math/tex">\theta</script> 
+when the notation used for the probability distribution has semicolon (i.e. <script type="math/tex">p(x;\theta)</script>), it means that in our predefined model we have a deterministic but unknwon parameter <script type="math/tex">\theta</script> 
 <!-- that by using an approach such as maximum likelihood this parameter (or a set of parameters$$$$) can be found. -->
 and we are looking for an estimator (a function of samples<script type="math/tex"></script>)
 to
@@ -433,7 +496,7 @@ language modeling we can assume words in a sentence are i.i.d data samples  (the
   <img width="60%" height="60%" src="/assets/2_clusters_data.png" />
 </p>
 
-<p>After observing the data I can decide to have two clusters in my model and simply define
+<p>After observing the data we can decide to have two clusters in our model and simply define
  <script type="math/tex">p_{\boldsymbol{\theta}}(\mathbf{x}|z=0)
  	=
  	\mathcal{N}(\mu_0,\sigma_0)</script>
@@ -443,7 +506,7 @@ similarly
  	=
  	\mathcal{N}(\mu_1,\sigma_1)</script>
 .
- Also I should define the prior information for <script type="math/tex">p_{\boldsymbol\theta}(\mathbf{z})</script>. (We sometimes assume that the prior for <script type="math/tex">\mathbf{z}</script> lacks any parameter such as <script type="math/tex">\mathcal{N}(0,1)</script>). So in this clustering example our model for the conditional probability is Gaussian and the parameters for them are <script type="math/tex">\boldsymbol{\theta}=\{\mu_0,\sigma_0,\mu_1,\sigma_1\}</script>.</p>
+ Also we should define the prior information for <script type="math/tex">p_{\boldsymbol\theta}(\mathbf{z})</script>. (We sometimes assume that the prior for <script type="math/tex">\mathbf{z}</script> lacks any unknown parameter such as <script type="math/tex">\mathcal{N}(0,1)</script>). So in this clustering example our model for the conditional probability is Gaussian and the parameters for them are <script type="math/tex">\boldsymbol{\theta}=\{\mu_0,\sigma_0,\mu_1,\sigma_1\}</script>.</p>
 
 <p align="center">
   <img width="60%" height="60%" src="/assets/2_clusters_z_2.png" />
@@ -600,6 +663,37 @@ D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p_{\boldsymbol\theta}(\math
 make them as probable as possible. So we should maximize 
 <script type="math/tex">\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}
 {\log p_{\boldsymbol\theta}(\mathbf{x}|\mathbf{z})}</script>. In other words, before observing the data we had some information and now after observing them we have further information about the model and our approximation for the posterior should make a balance between them.</p>
+
+<p><!--First way--></p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_config = function () {
+    // Here is an example,
+    // this.page.url = "https://poanchen.github.io/2018/12/28/variational-inference.html";
+    this.page.url = "https://markovblanket.github.io/2018/12/28/variational-inference.html";
+    this.page.identifier = "/2018/12/28/variational-inference.html";
+  };
+  // You should be able to get the following lines of code from your Disqus admin.
+  // https://disqus.com/admin/universalcode
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//markovblanket.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+
+<noscript>
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+<!--Second way-->
+<div id="disqus_thread"></div>
+<script src="/path/to/your/disqus.js"></script>
+
+<noscript>
+  Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
 
 <!-- <figure>      
 	<img src="/assets/latent_variable.png" alt="image"

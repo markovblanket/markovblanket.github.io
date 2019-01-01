@@ -6,8 +6,8 @@
 </description>
     <link>https://markovblanket.github.io/</link>
     <atom:link href="https://markovblanket.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 30 Dec 2018 02:06:46 -0500</pubDate>
-    <lastBuildDate>Sun, 30 Dec 2018 02:06:46 -0500</lastBuildDate>
+    <pubDate>Tue, 01 Jan 2019 15:26:11 -0500</pubDate>
+    <lastBuildDate>Tue, 01 Jan 2019 15:26:11 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -82,6 +82,38 @@ p\big(u &lt; \dfrac{f(y)}{Mg(y)}\big)
 	\dfrac{f(y)}{Mg(y)}
 	g(y)
 }{\dfrac{1}{M}}= f(y)&lt;/script&gt;
+
+&lt;p&gt;&lt;!--First way--&gt;&lt;/p&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var disqus_config = function () {
+    // Here is an example,
+    // this.page.url = &quot;https://poanchen.github.io/2018/12/28/sample-rejection.html&quot;;
+    this.page.url = &quot;https://markovblanket.github.io/2018/12/28/sample-rejection.html&quot;;
+    this.page.identifier = &quot;/2018/12/28/sample-rejection.html&quot;;
+  };
+  // You should be able to get the following lines of code from your Disqus admin.
+  // https://disqus.com/admin/universalcode
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//markovblanket.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+&lt;/script&gt;
+
+&lt;noscript&gt;
+  Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+&lt;/noscript&gt;
+
+&lt;!--Second way--&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/path/to/your/disqus.js&quot;&gt;&lt;/script&gt;
+
+&lt;noscript&gt;
+  Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+&lt;/noscript&gt;
+
 </description>
         <pubDate>Fri, 28 Dec 2018 05:11:11 -0500</pubDate>
         <link>https://markovblanket.github.io/2018/12/28/sample-rejection.html</link>
@@ -301,6 +333,37 @@ p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})
 \arg\max_{\boldsymbol\theta} 
 f(\boldsymbol\theta)&lt;/script&gt;
 
+&lt;p&gt;&lt;!--First way--&gt;&lt;/p&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var disqus_config = function () {
+    // Here is an example,
+    // this.page.url = &quot;https://poanchen.github.io/2018/12/28/EMalgorithm.html&quot;;
+    this.page.url = &quot;https://markovblanket.github.io/2018/12/28/EMalgorithm.html&quot;;
+    this.page.identifier = &quot;/2018/12/28/EMalgorithm.html&quot;;
+  };
+  // You should be able to get the following lines of code from your Disqus admin.
+  // https://disqus.com/admin/universalcode
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//markovblanket.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+&lt;/script&gt;
+
+&lt;noscript&gt;
+  Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+&lt;/noscript&gt;
+
+&lt;!--Second way--&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/path/to/your/disqus.js&quot;&gt;&lt;/script&gt;
+
+&lt;noscript&gt;
+  Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+&lt;/noscript&gt;
+
 &lt;!-- it makes sence to 
 Maximizing $$ L(\boldsymbol\theta) $$ in $${(n+1)}^{\mathrm{th}}$$ step is equivalent to maximizing $$L(\boldsymbol\theta)$$
  --&gt;
@@ -323,7 +386,7 @@ p(x[0],x[1],\ldots,x[N-1];\theta)
 &lt;p&gt;For each particular problem 
 (or dataset&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;)
  we can define our model for this joint probability. 
-For example when the probability distribution has semicolon (like &lt;script type=&quot;math/tex&quot;&gt;p(x;\theta)&lt;/script&gt;), it means that in our predefined model we have a deterministic but unknwon parameter &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; 
+when the notation used for the probability distribution has semicolon (i.e. &lt;script type=&quot;math/tex&quot;&gt;p(x;\theta)&lt;/script&gt;), it means that in our predefined model we have a deterministic but unknwon parameter &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; 
 &lt;!-- that by using an approach such as maximum likelihood this parameter (or a set of parameters$$$$) can be found. --&gt;
 and we are looking for an estimator (a function of samples&lt;script type=&quot;math/tex&quot;&gt;&lt;/script&gt;)
 to
@@ -349,7 +412,7 @@ language modeling we can assume words in a sentence are i.i.d data samples  (the
   &lt;img width=&quot;60%&quot; height=&quot;60%&quot; src=&quot;/assets/2_clusters_data.png&quot; /&gt;
 &lt;/p&gt;
 
-&lt;p&gt;After observing the data I can decide to have two clusters in my model and simply define
+&lt;p&gt;After observing the data we can decide to have two clusters in our model and simply define
  &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol{\theta}}(\mathbf{x}|z=0)
  	=
  	\mathcal{N}(\mu_0,\sigma_0)&lt;/script&gt;
@@ -359,7 +422,7 @@ similarly
  	=
  	\mathcal{N}(\mu_1,\sigma_1)&lt;/script&gt;
 .
- Also I should define the prior information for &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol\theta}(\mathbf{z})&lt;/script&gt;. (We sometimes assume that the prior for &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; lacks any parameter such as &lt;script type=&quot;math/tex&quot;&gt;\mathcal{N}(0,1)&lt;/script&gt;). So in this clustering example our model for the conditional probability is Gaussian and the parameters for them are &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}=\{\mu_0,\sigma_0,\mu_1,\sigma_1\}&lt;/script&gt;.&lt;/p&gt;
+ Also we should define the prior information for &lt;script type=&quot;math/tex&quot;&gt;p_{\boldsymbol\theta}(\mathbf{z})&lt;/script&gt;. (We sometimes assume that the prior for &lt;script type=&quot;math/tex&quot;&gt;\mathbf{z}&lt;/script&gt; lacks any unknown parameter such as &lt;script type=&quot;math/tex&quot;&gt;\mathcal{N}(0,1)&lt;/script&gt;). So in this clustering example our model for the conditional probability is Gaussian and the parameters for them are &lt;script type=&quot;math/tex&quot;&gt;\boldsymbol{\theta}=\{\mu_0,\sigma_0,\mu_1,\sigma_1\}&lt;/script&gt;.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
   &lt;img width=&quot;60%&quot; height=&quot;60%&quot; src=&quot;/assets/2_clusters_z_2.png&quot; /&gt;
@@ -516,6 +579,37 @@ D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p_{\boldsymbol\theta}(\math
 make them as probable as possible. So we should maximize 
 &lt;script type=&quot;math/tex&quot;&gt;\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}
 {\log p_{\boldsymbol\theta}(\mathbf{x}|\mathbf{z})}&lt;/script&gt;. In other words, before observing the data we had some information and now after observing them we have further information about the model and our approximation for the posterior should make a balance between them.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--First way--&gt;&lt;/p&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  var disqus_config = function () {
+    // Here is an example,
+    // this.page.url = &quot;https://poanchen.github.io/2018/12/28/variational-inference.html&quot;;
+    this.page.url = &quot;https://markovblanket.github.io/2018/12/28/variational-inference.html&quot;;
+    this.page.identifier = &quot;/2018/12/28/variational-inference.html&quot;;
+  };
+  // You should be able to get the following lines of code from your Disqus admin.
+  // https://disqus.com/admin/universalcode
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '//markovblanket.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+&lt;/script&gt;
+
+&lt;noscript&gt;
+  Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+&lt;/noscript&gt;
+
+&lt;!--Second way--&gt;
+&lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
+&lt;script src=&quot;/path/to/your/disqus.js&quot;&gt;&lt;/script&gt;
+
+&lt;noscript&gt;
+  Please enable JavaScript to view the &lt;a href=&quot;https://disqus.com/?ref_noscript&quot;&gt;comments powered by Disqus.&lt;/a&gt;
+&lt;/noscript&gt;
 
 &lt;!-- &lt;figure&gt;      
 	&lt;img src=&quot;/assets/latent_variable.png&quot; alt=&quot;image&quot;
