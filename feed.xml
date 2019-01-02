@@ -6,8 +6,8 @@
 </description>
     <link>https://markovblanket.github.io/</link>
     <atom:link href="https://markovblanket.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 02 Jan 2019 12:24:44 -0500</pubDate>
-    <lastBuildDate>Wed, 02 Jan 2019 12:24:44 -0500</lastBuildDate>
+    <pubDate>Wed, 02 Jan 2019 14:34:49 -0500</pubDate>
+    <lastBuildDate>Wed, 02 Jan 2019 14:34:49 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -333,6 +333,11 @@ p(\mathbf{z}|\mathbf{X};\boldsymbol{\theta_n})
 \arg\max_{\boldsymbol\theta} 
 f(\boldsymbol\theta)&lt;/script&gt;
 
+&lt;h1 id=&quot;refrences&quot;&gt;Refrences:&lt;/h1&gt;
+&lt;p&gt;1-&lt;a href=&quot;https://www.deeplearningbook.org/contents/ml.html&quot;&gt;Maximum Likelihood Estimation&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2-&lt;a href=&quot;https://www.cs.utah.edu/~piyush/teaching/EM_algorithm.pdf&quot;&gt;The Expectation Maximization Algorithm A short tutorial&lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;!--First way--&gt;&lt;/p&gt;
 &lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
@@ -579,6 +584,11 @@ D_{\mathrm{KL}}\big(q_{\boldsymbol\phi}(\mathbf{z})\|p_{\boldsymbol\theta}(\math
 make them as probable as possible. So we should maximize 
 &lt;script type=&quot;math/tex&quot;&gt;\mathbb{E}_{q_\boldsymbol{\phi}({\mathbf{z}})}
 {\log p_{\boldsymbol\theta}(\mathbf{x}|\mathbf{z})}&lt;/script&gt;. In other words, before observing the data we had some information and now after observing them we have further information about the model and our approximation for the posterior should make a balance between them.&lt;/p&gt;
+
+&lt;h1 id=&quot;refrences&quot;&gt;Refrences:&lt;/h1&gt;
+&lt;p&gt;1-&lt;a href=&quot;https://arxiv.org/pdf/1312.6114.pdf&quot;&gt;Autoencoding Variational Bayes&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2-&lt;a href=&quot;https://arxiv.org/pdf/1601.00670.pdf&quot;&gt;Variational Inference: A Review for Statisticians&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;!--First way--&gt;&lt;/p&gt;
 &lt;div id=&quot;disqus_thread&quot;&gt;&lt;/div&gt;
