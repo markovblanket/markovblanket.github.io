@@ -71,6 +71,14 @@ article {
     font-style: normal !important;
     font-weight: bold;
     letter-spacing: 2px; }
+  @media screen and (max-width: 600px) {
+    article > .entry-summary {
+      color: #b7b1a9;
+      font-size: 30%; } }
+
+div > .summary {
+  color: #b7b1a9;
+  font-size: 30%; }
 
 .post-header {
   border-bottom: 1px solid #d9d6d0;
